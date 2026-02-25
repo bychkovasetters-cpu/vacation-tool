@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<!-- saved from url=(0063)file:///Users/ekaterinabyckova/Downloads/vacation_digest_8.html -->
+<html lang="ru"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Отпуска SETTERS</title>
+<link href="./index_files/css2" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0e0e10;
+    --surface: #18181c;
+    --border: #2a2a30;
+    --accent: #c8f55a;
+    --accent2: #5af5c8;
+    --text: #f0f0ee;
+    --muted: #888890;
+    --danger: #f55a5a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Onest', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    padding: 40px 24px;
+  }
+
+  .container { max-width: 780px; margin: 0 auto; }
+
+  header {
+    margin-bottom: 48px;
+  }
+
+  .label {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-family: 'Unbounded', sans-serif;
+    font-size: clamp(28px, 5vw, 44px);
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--text);
+  }
+
+  h1 span { color: var(--accent); }
+
+  .subtitle {
+    margin-top: 12px;
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 20px;
+  }
+
+  .card-title {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+
+  /* Drop zone */
+  .dropzone {
+    border: 2px dashed var(--border);
+    border-radius: 12px;
+    padding: 48px 24px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+  }
+
+  .dropzone:hover, .dropzone.drag-over {
+    border-color: var(--accent);
+    background: rgba(200, 245, 90, 0.04);
+  }
+
+  .dropzone input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+  }
+
+  .drop-icon {
+    font-size: 36px;
+    margin-bottom: 12px;
+  }
+
+  .drop-text {
+    font-size: 15px;
+    color: var(--muted);
+  }
+
+  .drop-text strong {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .file-loaded {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    background: rgba(200, 245, 90, 0.08);
+    border: 1px solid rgba(200, 245, 90, 0.3);
+    border-radius: 10px;
+  }
+
+  .file-loaded .file-icon { font-size: 22px; }
+  .file-loaded .file-name { font-size: 14px; font-weight: 500; color: var(--accent); }
+  .file-loaded .file-rows { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  /* Week selector */
+  .week-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .week-btn {
+    flex: 1;
+    min-width: 140px;
+    padding: 14px 20px;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    font-family: 'Onest', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: left;
+  }
+
+  .week-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .week-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #0e0e10;
+    font-weight: 500;
+  }
+
+  .week-btn .btn-label {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.6;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  /* Custom date */
+  .date-inputs {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .date-inputs label {
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .date-inputs input[type="date"] {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'Onest', sans-serif;
+    font-size: 14px;
+    padding: 10px 14px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+
+  .date-inputs input[type="date"]:focus { border-color: var(--accent); }
+
+  /* Generate button */
+  .btn-generate {
+    width: 100%;
+    padding: 18px;
+    background: var(--accent);
+    color: #0e0e10;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Unbounded', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: all 0.15s;
+    margin-top: 8px;
+  }
+
+  .btn-generate:hover { background: #d4f96e; transform: translateY(-1px); }
+  .btn-generate:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
+
+  /* Result */
+  .result-card { display: none; }
+  .result-card.visible { display: block; }
+
+  .result-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    flex-wrap: gap;
+  }
+
+  .result-meta {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .result-meta strong { color: var(--accent2); }
+
+  .btn-copy {
+    padding: 10px 20px;
+    background: transparent;
+    border: 1px solid var(--accent2);
+    border-radius: 8px;
+    color: var(--accent2);
+    font-family: 'Onest', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+
+  .btn-copy:hover {
+    background: var(--accent2);
+    color: #0e0e10;
+  }
+
+  .btn-copy.copied {
+    background: var(--accent2);
+    color: #0e0e10;
+  }
+
+  .result-text {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    font-size: 14px;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    word-break: break-word;
+    color: var(--text);
+    min-height: 80px;
+  }
+
+  /* Warnings */
+  .warnings {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .warning-item {
+    font-size: 12px;
+    color: #f5c85a;
+    background: rgba(245, 200, 90, 0.07);
+    border: 1px solid rgba(245, 200, 90, 0.2);
+    border-radius: 8px;
+    padding: 8px 12px;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 32px;
+    color: var(--muted);
+    font-size: 15px;
+  }
+
+  .empty-state .emoji { font-size: 32px; margin-bottom: 8px; }
+
+  .result-header { gap: 12px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="label">SETTERS — инструмент HR</div>
+    <h1>Дайджест<br><span>отпусков</span></h1>
+    <p class="subtitle">Загрузи CSV из Google Sheets → выбери неделю → скопируй в Telegram</p>
+  </header>
+
+  <!-- Step 1: Upload -->
+  <div class="card">
+    <div class="card-title">01 — Загрузи таблицу</div>
+
+    <div class="dropzone" id="dropzone" style="display: none;">
+      <input type="file" id="fileInput" accept=".csv">
+      <div class="drop-icon">📂</div>
+      <div class="drop-text"><strong>Выбери CSV файл</strong><br>или перетащи сюда</div>
+    </div>
+
+    <div id="fileLoaded" style="display: flex;" class="file-loaded">
+      <span class="file-icon">✅</span>
+      <div>
+        <div class="file-name" id="fileName">Отпуск SETTERS - 2026 (1).csv</div>
+        <div class="file-rows" id="fileRows">72 сотрудников найдено</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 2: Week -->
+  <div class="card">
+    <div class="card-title">02 — Выбери неделю</div>
+    <div class="week-row">
+      <button class="week-btn" id="btnCurrent" onclick="selectWeek(&#39;current&#39;)">
+        <span class="btn-label">Текущая неделя</span>
+        <span id="labelCurrent">23.02 — 01.03</span>
+      </button>
+      <button class="week-btn active" id="btnNext" onclick="selectWeek(&#39;next&#39;)">
+        <span class="btn-label">Следующая неделя</span>
+        <span id="labelNext">02.03 — 08.03</span>
+      </button>
+    </div>
+    <div class="date-inputs">
+      <label>или свой период:</label>
+      <input type="date" id="dateFrom">
+      <label>—</label>
+      <input type="date" id="dateTo">
+    </div>
+  </div>
+
+  <!-- Generate -->
+  <button class="btn-generate" id="btnGenerate" onclick="generate()">
+    Сформировать дайджест →
+  </button>
+
+  <!-- Result -->
+  <div class="card result-card visible" id="resultCard" style="margin-top: 20px; display: block;">
+    <div class="result-header">
+      <div>
+        <div class="card-title" style="margin-bottom:4px">03 — Готовый текст</div>
+        <div class="result-meta" id="resultMeta">Найдено <strong>4</strong> сотрудников в отпуске</div>
+      </div>
+      <div style="display:flex;gap:8px;">
+        <button class="btn-copy" id="btnCopy" onclick="copyResult()">📋 Скопировать</button>
+        <button class="btn-copy" id="btnSend" onclick="sendToTelegram()" style="border-color:#5af5c8;color:#5af5c8;white-space:nowrap;">✈️ В Telegram</button>
+      </div>
+    </div>
+    <div class="result-text" id="resultText" style="white-space:pre-wrap;line-height:1.8;font-size:14px;" contenteditable="false">Отпуска 02.03-08.03
+
+<span style="font-family:Unbounded,sans-serif;font-size:11px;letter-spacing:0.1em;color:#888">DESIGN HUB</span>
+**Сизова Анна**, __медиа-дизайнер__, 6 марта
+
+<span style="font-family:Unbounded,sans-serif;font-size:11px;letter-spacing:0.1em;color:#888">ACCOUNTING</span>
+**Аня Ивахненко**, __account director__, 2-6 марта
+
+<span style="font-family:Unbounded,sans-serif;font-size:11px;letter-spacing:0.1em;color:#888">OPERATIONS</span>
+**Вероника Долгих**, __операционный директор__, 2-7 марта
+
+<span style="font-family:Unbounded,sans-serif;font-size:11px;letter-spacing:0.1em;color:#888">CREATIVE</span>
+**Саша Малькова**, __creative lead__, 3-13 марта
+</div>
+    <div class="warnings" id="warnings"><div class="warning-item">⚠️ Не смогли распознать формат: «19-20 февраля» (19-20 февраля)</div><div class="warning-item">⚠️ Не смогли распознать формат: «16 февраля» (16 февраля)</div><div class="warning-item">⚠️ Не смогли распознать формат: «3-16 августа» (3-16 августа)</div><div class="warning-item">⚠️ Не смогли распознать формат: «17 февраля» (17 февраля)</div><div class="warning-item">⚠️ Не смогли распознать формат: «10-13 марта» (10-13 марта)</div><div class="warning-item">⚠️ Не смогли распознать формат: «2-6 марта» (2-6 марта)</div><div class="warning-item">⚠️ Не смогли распознать формат: «4 февраля» (4 февраля)</div><div class="warning-item">⚠️ Не смогли распознать формат: «20–24 апреля» (20–24 апреля)</div><div class="warning-item">⚠️ Не смогли распознать формат: «8–11 июня» (8–11 июня)</div><div class="warning-item">⚠️ Не смогли распознать формат: «27-30 апреля» (27-30 апреля)</div><div class="warning-item">⚠️ Не смогли распознать формат: «8-11 июня» (8-11 июня)</div><div class="warning-item">⚠️ Не смогли распознать формат: «7-18 сентября» (7-18 сентября)</div><div class="warning-item">⚠️ Не смогли распознать формат: «23-27 ноября» (23-27 ноября)</div><div class="warning-item">⚠️ Не смогли распознать формат: «20 февраля» (20 февраля)</div><div class="warning-item">⚠️ Не смогли распознать формат: «15-26 июня» (15-26 июня)</div><div class="warning-item">⚠️ Не смогли распознать формат: «5-16 октября» (5-16 октября)</div><div class="warning-item">⚠️ Не смогли распознать формат: «20–26 апреля» (20–26 апреля)</div><div class="warning-item">⚠️ Не смогли распознать формат: «19–30 октября» (19–30 октября)</div><div class="warning-item">⚠️ Не смогли распознать формат: «27-30 января» (27-30 января)</div><div class="warning-item">⚠️ Не смогли распознать формат: «20-30 апреля» (20-30 апреля)</div><div class="warning-item">⚠️ Не смогли распознать формат: «4-15 февраля» (4-15 февраля)</div></div>
+  </div>
+
+  <!-- Telegram Settings Modal -->
+  <div id="tgModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:100;align-items:center;justify-content:center;">
+    <div style="background:#18181c;border:1px solid #2a2a30;border-radius:16px;padding:32px;width:90%;max-width:480px;">
+      <div style="font-family:Unbounded,sans-serif;font-size:11px;letter-spacing:0.15em;color:#888;margin-bottom:20px;">НАСТРОЙКИ TELEGRAM</div>
+      <div style="margin-bottom:16px;">
+        <label style="font-size:12px;color:#888;text-transform:uppercase;letter-spacing:0.1em;display:block;margin-bottom:8px;">Bot Token</label>
+        <input id="tgToken" type="text" placeholder="1234567890:AAF..." style="width:100%;background:#0e0e10;border:1px solid #2a2a30;border-radius:8px;color:#f0f0ee;font-family:Onest,sans-serif;font-size:14px;padding:12px 14px;outline:none;box-sizing:border-box;">
+      </div>
+      <div style="margin-bottom:24px;">
+        <label style="font-size:12px;color:#888;text-transform:uppercase;letter-spacing:0.1em;display:block;margin-bottom:8px;">Chat ID</label>
+        <input id="tgChatId" type="text" placeholder="-1001234567890" style="width:100%;background:#0e0e10;border:1px solid #2a2a30;border-radius:8px;color:#f0f0ee;font-family:Onest,sans-serif;font-size:14px;padding:12px 14px;outline:none;box-sizing:border-box;">
+      </div>
+      <div style="display:flex;gap:12px;">
+        <button onclick="saveTgSettings()" style="flex:1;padding:14px;background:#c8f55a;color:#0e0e10;border:none;border-radius:10px;font-family:Unbounded,sans-serif;font-size:12px;font-weight:600;cursor:pointer;">Сохранить</button>
+        <button onclick="closeTgModal()" style="flex:1;padding:14px;background:transparent;border:1px solid #2a2a30;border-radius:10px;color:#888;font-family:Unbounded,sans-serif;font-size:12px;cursor:pointer;">Отмена</button>
+      </div>
+      <div id="tgModalError" style="margin-top:12px;font-size:13px;color:#f55a5a;display:none;"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ─── State ───────────────────────────────────────────────
+let csvData = null;
+let selectedFrom = null;
+let selectedTo   = null;
+let warnings     = [];
+
+// ─── Month map ───────────────────────────────────────────
+const MONTHS_RU = {
+  'январь':1,'февраль':2,'март':3,'апрель':4,'май':5,'июнь':6,
+  'июль':7,'август':8,'сентябрь':9,'октябрь':10,'ноябрь':11,'декабрь':12,
+  'января':1,'февраля':2,'марта':3,'апреля':4,'мая':5,'июня':6,
+  'июля':7,'августа':8,'сентября':9,'октября':10,'ноября':11,'декабря':12,
+  'янв':1,'фев':2,'мар':3,'апр':4,'июн':6,'июл':7,'авг':8,'сен':9,'окт':10,'ноя':11,'дек':12
+};
+
+// ─── Week helpers ─────────────────────────────────────────
+function getMonday(d) {
+  const dt = new Date(d);
+  const day = dt.getDay();
+  dt.setDate(dt.getDate() - (day === 0 ? 6 : day - 1));
+  dt.setHours(0,0,0,0);
+  return dt;
+}
+
+function addDays(d, n) {
+  const dt = new Date(d);
+  dt.setDate(dt.getDate() + n);
+  return dt;
+}
+
+function fmtDate(d) {
+  return `${String(d.getDate()).padStart(2,'0')}.${String(d.getMonth()+1).padStart(2,'0')}`;
+}
+
+function fmtDateInput(d) {
+  return d.toISOString().split('T')[0];
+}
+
+// ─── Init week labels ─────────────────────────────────────
+(function initWeeks() {
+  const today = new Date();
+  const curMon = getMonday(today);
+  const curSun = addDays(curMon, 6);
+  const nxtMon = addDays(curMon, 7);
+  const nxtSun = addDays(nxtMon, 6);
+
+  document.getElementById('labelCurrent').textContent = `${fmtDate(curMon)} — ${fmtDate(curSun)}`;
+  document.getElementById('labelNext').textContent    = `${fmtDate(nxtMon)} — ${fmtDate(nxtSun)}`;
+
+  // Default: next week
+  selectWeek('next');
+})();
+
+function selectWeek(type) {
+  const today = new Date();
+  const curMon = getMonday(today);
+  let from, to;
+
+  if (type === 'current') {
+    from = curMon;
+    to   = addDays(curMon, 6);
+    document.getElementById('btnCurrent').classList.add('active');
+    document.getElementById('btnNext').classList.remove('active');
+  } else {
+    from = addDays(curMon, 7);
+    to   = addDays(curMon, 13);
+    document.getElementById('btnNext').classList.add('active');
+    document.getElementById('btnCurrent').classList.remove('active');
+  }
+
+  selectedFrom = from;
+  selectedTo   = to;
+  document.getElementById('dateFrom').value = fmtDateInput(from);
+  document.getElementById('dateTo').value   = fmtDateInput(to);
+  checkReady();
+}
+
+document.getElementById('dateFrom').addEventListener('change', () => {
+  document.getElementById('btnCurrent').classList.remove('active');
+  document.getElementById('btnNext').classList.remove('active');
+  selectedFrom = new Date(document.getElementById('dateFrom').value + 'T00:00:00');
+  checkReady();
+});
+
+document.getElementById('dateTo').addEventListener('change', () => {
+  selectedTo = new Date(document.getElementById('dateTo').value + 'T00:00:00');
+  checkReady();
+});
+
+function checkReady() {
+  const ok = csvData && selectedFrom && selectedTo;
+  document.getElementById('btnGenerate').disabled = !ok;
+}
+
+// ─── File upload ──────────────────────────────────────────
+const dropzone  = document.getElementById('dropzone');
+const fileInput = document.getElementById('fileInput');
+
+dropzone.addEventListener('dragover', e => { e.preventDefault(); dropzone.classList.add('drag-over'); });
+dropzone.addEventListener('dragleave', () => dropzone.classList.remove('drag-over'));
+dropzone.addEventListener('drop', e => {
+  e.preventDefault();
+  dropzone.classList.remove('drag-over');
+  const file = e.dataTransfer.files[0];
+  if (file) loadFile(file);
+});
+
+fileInput.addEventListener('change', () => {
+  if (fileInput.files[0]) loadFile(fileInput.files[0]);
+});
+
+function loadFile(file) {
+  const reader = new FileReader();
+  reader.onload = e => {
+    const text = e.target.result;
+    csvData = parseCSV(text);
+    dropzone.style.display = 'none';
+    document.getElementById('fileLoaded').style.display = 'flex';
+    document.getElementById('fileName').textContent = file.name;
+    const empCount = csvData.filter(r => r.isEmployee).length;
+    document.getElementById('fileRows').textContent = `${empCount} сотрудников найдено`;
+    checkReady();
+  };
+  reader.readAsText(file, 'UTF-8');
+}
+
+// ─── CSV Parser ───────────────────────────────────────────
+function parseCSV(text) {
+  // Proper CSV parser that handles multiline quoted fields
+  const rows = parseCSVFull(text);
+
+  // Find header row (contains "Январь" or "Сотрудник")
+  let headerIdx = -1;
+  for (let i = 0; i < rows.length; i++) {
+    if (rows[i].some(c => c.trim().toLowerCase().includes('январь') || c.trim().toLowerCase() === 'сотрудник')) {
+      headerIdx = i;
+      break;
+    }
+  }
+  if (headerIdx === -1) return [];
+
+  const header = rows[headerIdx];
+  const monthCols = {};
+  for (let c = 0; c < header.length; c++) {
+    const val = header[c].trim().toLowerCase().replace(/\s+/g, '');
+    for (const [name, num] of Object.entries(MONTHS_RU)) {
+      if (val === name || val === name.replace(/\s+/g, '')) {
+        monthCols[c] = num;
+        break;
+      }
+    }
+  }
+
+  const result = [];
+  let currentDept = '';
+
+  for (let i = headerIdx + 1; i < rows.length; i++) {
+    const row  = rows[i];
+    const cell = (row[0] || '').trim();
+    if (!cell) continue;
+
+    // Department header: all caps, no vacation data
+    const isAllCaps = cell === cell.toUpperCase() && cell.length > 2 && /[А-ЯA-Z]/.test(cell);
+    const hasData   = row.slice(1).some(c => c.trim() !== '');
+
+    if (isAllCaps && !hasData) {
+      // GROUP 1 / GROUP 2 / GROUP  are sub-groups of ACCOUNTING — don't change dept
+      const isSubGroup = /^GROUP(\s+\d+)?\s*$/.test(cell) || cell.trim() === 'GROUP';
+      if (!isSubGroup) {
+        currentDept = cell;
+        result.push({ isDept: true, dept: cell });
+      }
+      continue;
+    }
+
+    // Name and position are in col0 separated by \n (multiline cell)
+    const nameLines = cell.split('\n');
+    const empName   = nameLines[0].trim();
+    const empPos    = nameLines[1] ? nameLines[1].trim() : '';
+
+    const vacations = [];
+    for (const [colStr, monthNum] of Object.entries(monthCols)) {
+      const col     = parseInt(colStr);
+      const cellVal = (row[col] || '').trim();
+      if (!cellVal) continue;
+      const lower = cellVal.toLowerCase();
+      if (lower === 'декрет') continue;
+      vacations.push({ cell: cellVal, month: monthNum, col, enriched: enrichDate(cellVal, monthNum) });
+    }
+
+    result.push({ isEmployee: true, name: empName, position: empPos, dept: currentDept, vacations });
+  }
+
+  return result;
+}
+
+// Full RFC-4180 CSV parser that correctly handles \n inside quoted fields
+function parseCSVFull(text) {
+  const rows = [];
+  let row = [];
+  let cur = '';
+  let inQuote = false;
+
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i];
+    const next = text[i + 1];
+
+    if (inQuote) {
+      if (ch === '"' && next === '"') {
+        cur += '"';
+        i++;
+      } else if (ch === '"') {
+        inQuote = false;
+      } else {
+        cur += ch;
+      }
+    } else {
+      if (ch === '"') {
+        inQuote = true;
+      } else if (ch === ',') {
+        row.push(cur);
+        cur = '';
+      } else if (ch === '\r' && next === '\n') {
+        row.push(cur);
+        cur = '';
+        rows.push(row);
+        row = [];
+        i++;
+      } else if (ch === '\n' || ch === '\r') {
+        row.push(cur);
+        cur = '';
+        rows.push(row);
+        row = [];
+      } else {
+        cur += ch;
+      }
+    }
+  }
+  if (cur || row.length > 0) {
+    row.push(cur);
+    rows.push(row);
+  }
+  return rows;
+}
+
+
+const MONTH_NAMES_GEN = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+
+function enrichDate(cellVal, colMonth) {
+  // If cellVal already contains a month name or full date — return as is
+  const hasMonth = /[а-яА-Я]{3,}|\d{1,2}\.\d{1,2}/.test(cellVal);
+  if (hasMonth) return cellVal;
+
+  // Simple range like "3-13" or "24-27" — append month name
+  const simple = cellVal.trim().match(/^(\d{1,2})\s*[-–—]\s*(\d{1,2})$/);
+  if (simple && colMonth) {
+    return `${simple[1]}-${simple[2]} ${MONTH_NAMES_GEN[colMonth-1]}`;
+  }
+
+  // Single day like "9" — append month name
+  const single = cellVal.trim().match(/^(\d{1,2})$/);
+  if (single && colMonth) {
+    return `${single[1]} ${MONTH_NAMES_GEN[colMonth-1]}`;
+  }
+
+  return cellVal;
+}
+
+// ─── Date range parser ────────────────────────────────────
+function parseRanges(cellVal, colMonth, year) {
+  const ranges  = [];
+  const raw     = cellVal;
+  warnings      = warnings || [];
+
+  // Strip noise: (предварительно), (отгулы), ОТГУЛ, ??
+  let val = cellVal
+    .replace(/\(предварительно\)/gi, '')
+    .replace(/\(отгулы\)/gi, '')
+    .replace(/отгул[,\s]*/gi, '')
+    .replace(/\?\?/g, '')
+    .trim();
+
+  if (!val) return ranges;
+
+  // Split by comma for multiple ranges like "2-3, 5-6" or "14, 27"
+  const parts = val.split(/,(?!\d{2}\.)/); // avoid splitting "25-26.06"
+
+  for (let part of parts) {
+    part = part.trim();
+    if (!part) continue;
+
+    // Detect inline month name
+    let partMonth = colMonth;
+    for (const [name, num] of Object.entries(MONTHS_RU)) {
+      const re = new RegExp(`\\b${name}\\b`, 'i');
+      if (re.test(part)) {
+        partMonth = num;
+        part = part.replace(re, '').trim();
+        break;
+      }
+    }
+
+    // "30.03–6.04" or "04.05 - 10.05" — full date range
+    const fullRange = part.match(/^(\d{1,2})\.(\d{1,2})\s*[-–—]\s*(\d{1,2})\.(\d{1,2})$/);
+    if (fullRange) {
+      const s = new Date(year, +fullRange[2]-1, +fullRange[1]);
+      const e = new Date(year, +fullRange[4]-1, +fullRange[3]);
+      if (e < s) e.setFullYear(year+1);
+      ranges.push({start:s, end:e, label: raw});
+      continue;
+    }
+
+    // "21.09 - 2.10" with spaces
+    const fullRangeSpaced = part.match(/^(\d{1,2})\.(\d{1,2})\s*[-–—]\s*(\d{1,2})\.(\d{1,2})$/);
+    if (fullRangeSpaced) {
+      const s = new Date(year, +fullRangeSpaced[2]-1, +fullRangeSpaced[1]);
+      const e = new Date(year, +fullRangeSpaced[4]-1, +fullRangeSpaced[3]);
+      ranges.push({start:s, end:e, label: raw});
+      continue;
+    }
+
+    // "21.09 сентября – 04 октября" style — handled via month detection above + below
+
+    // "27 июня — 9 августа" => after month strip becomes "27 — 9" which won't work
+    // Handle before stripping: detect two-month range
+    const twoMonthRange = raw.match(/(\d{1,2})\s+([а-я]+)\s*[-–—]\s*(\d{1,2})\s+([а-я]+)/i);
+    if (twoMonthRange && parts.length === 1) {
+      const m1 = MONTHS_RU[twoMonthRange[2].toLowerCase()];
+      const m2 = MONTHS_RU[twoMonthRange[4].toLowerCase()];
+      if (m1 && m2) {
+        const s = new Date(year, m1-1, +twoMonthRange[1]);
+        const e = new Date(year, m2-1, +twoMonthRange[3]);
+        ranges.push({start:s, end:e, label: raw});
+        continue;
+      }
+    }
+
+    // "17.09 ОТГУЛ, 21 сентября – 04 октября" — complex, try sub-parse
+    const complexDate = part.match(/(\d{1,2})\s+([а-яА-Я]+)\s*[-–—]\s*(\d{1,2})\s+([а-яА-Я]+)/i);
+    if (complexDate) {
+      const m1 = MONTHS_RU[complexDate[2].toLowerCase()];
+      const m2 = MONTHS_RU[complexDate[4].toLowerCase()];
+      if (m1 && m2) {
+        const s = new Date(year, m1-1, +complexDate[1]);
+        const e = new Date(year, m2-1, +complexDate[3]);
+        ranges.push({start:s, end:e, label: raw});
+        continue;
+      }
+    }
+
+    // "21-23.01" or "25-26.06"
+    const daysDotMonth = part.match(/^(\d{1,2})\s*[-–—]\s*(\d{1,2})\.(\d{1,2})$/);
+    if (daysDotMonth) {
+      const m = +daysDotMonth[3];
+      ranges.push({
+        start: new Date(year, m-1, +daysDotMonth[1]),
+        end:   new Date(year, m-1, +daysDotMonth[2]),
+        label: raw
+      });
+      continue;
+    }
+
+    // "2.02-13.02" (same month, dot format)
+    const dotSameMonth = part.match(/^(\d{1,2})\.(\d{1,2})\s*[-–—]\s*(\d{1,2})\.(\d{1,2})$/);
+    if (dotSameMonth) {
+      const s = new Date(year, +dotSameMonth[2]-1, +dotSameMonth[1]);
+      const e = new Date(year, +dotSameMonth[4]-1, +dotSameMonth[3]);
+      ranges.push({start:s, end:e, label: raw});
+      continue;
+    }
+
+    // "24-27" simple range
+    const simpleRange = part.match(/^(\d{1,2})\s*[-–—]\s*(\d{1,2})$/);
+    if (simpleRange) {
+      const m = partMonth || 1;
+      ranges.push({
+        start: new Date(year, m-1, +simpleRange[1]),
+        end:   new Date(year, m-1, +simpleRange[2]),
+        label: raw
+      });
+      continue;
+    }
+
+    // "31.08" single full date
+    const singleFull = part.match(/^(\d{1,2})\.(\d{1,2})$/);
+    if (singleFull) {
+      const d = new Date(year, +singleFull[2]-1, +singleFull[1]);
+      ranges.push({start:d, end:d, label: raw});
+      continue;
+    }
+
+    // "9" single day
+    const singleDay = part.match(/^(\d{1,2})$/);
+    if (singleDay) {
+      const m = partMonth || 1;
+      const d = new Date(year, m-1, +singleDay[1]);
+      ranges.push({start:d, end:d, label: raw});
+      continue;
+    }
+
+    // Unrecognized
+    if (part.replace(/[^а-яА-Яa-zA-Z]/g,'').length > 3) {
+      warnings.push(`⚠️ Не смогли распознать формат: «${raw}» (${part.split('\n')[0]})`);
+    }
+  }
+
+  return ranges;
+}
+
+function overlap(s1,e1,s2,e2) { return s1 <= e2 && e1 >= s2; }
+
+// ─── Generate ─────────────────────────────────────────────
+
+function textToHtml(text) {
+  // Show markdown symbols as-is (** and _) — user copies them into Telegram manually
+  return text.split('\n').map(line => {
+    if (line.trim() && line === line.toUpperCase() && line.trim().length > 2 && /[А-ЯA-Z]/.test(line)) {
+      return `<span style="font-family:Unbounded,sans-serif;font-size:11px;letter-spacing:0.1em;color:#888">${escHtml(line)}</span>`;
+    }
+    return escHtml(line);
+  }).join('\n');
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+
+function swapName(name) {
+  // If name has exactly two words — swap to "Имя Фамилия"
+  const parts = name.trim().split(/\s+/);
+  if (parts.length === 2) return parts[1] + ' ' + parts[0];
+  return name;
+}
+
+function generate() {
+  if (!csvData || !selectedFrom || !selectedTo) return;
+
+  const from = selectedFrom;
+  const to   = selectedTo;
+
+  warnings = [];
+
+  const year = from.getFullYear();
+  const depts = {};
+  const order = [];
+
+  let currentDept = '';
+
+  for (const row of csvData) {
+    if (row.isDept) {
+      currentDept = row.dept;
+      continue;
+    }
+    if (!row.isEmployee) continue;
+
+    const dept = row.dept || 'ДРУГИЕ';
+    const seen = new Set();
+
+    for (const vac of row.vacations) {
+      const ranges = parseRanges(vac.cell, vac.month, year);
+      for (const range of ranges) {
+        if (overlap(range.start, range.end, from, to)) {
+          const key = row.name + '|' + vac.cell;
+          if (!seen.has(key)) {
+            seen.add(key);
+            if (!depts[dept]) { depts[dept] = []; order.push(dept); }
+            depts[dept].push({ name: row.name, position: row.position, dates: vac.enriched || vac.cell });
+          }
+        }
+      }
+    }
+  }
+
+  // Build text
+  const weekLabel = `${fmtDate(from)}-${fmtDate(to)}`;
+  let text = '';
+  let total = 0;
+
+  const hasSomeone = order.some(d => depts[d] && depts[d].length > 0);
+
+  if (!hasSomeone) {
+    text = `На неделю ${weekLabel} отпусков нет 🎉`;
+  } else {
+    text = `Отпуска ${weekLabel}\n`;
+    for (const dept of order) {
+      const people = depts[dept];
+      if (!people || !people.length) continue;
+      text += `\n${dept}\n`;
+      for (const p of people) {
+        const posFormatted = p.position ? `, __${p.position}__` : '';
+        text += `**${swapName(p.name)}**${posFormatted}, ${p.dates}\n`;
+        total++;
+      }
+    }
+  }
+
+  // Show result
+  const rc = document.getElementById('resultCard');
+  rc.style.display = 'block';
+  rc.classList.add('visible');
+  document.getElementById('resultText').innerHTML = textToHtml(text);
+  document.getElementById('resultMeta').innerHTML = `Найдено <strong>${total}</strong> сотрудников в отпуске`;
+
+  // Show warnings
+  const wDiv = document.getElementById('warnings');
+  wDiv.innerHTML = '';
+  for (const w of [...new Set(warnings)]) {
+    const d = document.createElement('div');
+    d.className = 'warning-item';
+    d.textContent = w;
+    wDiv.appendChild(d);
+  }
+
+  rc.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ─── Copy ─────────────────────────────────────────────────
+function copyResult() {
+  const el  = document.getElementById('resultText');
+  const btn = document.getElementById('btnCopy');
+
+  const htmlContent = el.innerHTML;
+  const textContent = el.innerText;
+
+  // Try ClipboardItem with both text/html and text/plain
+  if (navigator.clipboard && window.ClipboardItem) {
+    const item = new ClipboardItem({
+      'text/html':  new Blob([htmlContent], { type: 'text/html' }),
+      'text/plain': new Blob([textContent], { type: 'text/plain' }),
+    });
+    navigator.clipboard.write([item]).then(() => {
+      showCopied(btn);
+    }).catch(() => {
+      // fallback
+      navigator.clipboard.writeText(textContent).then(() => showCopied(btn));
+    });
+  } else {
+    navigator.clipboard.writeText(textContent).then(() => showCopied(btn));
+  }
+}
+
+function showCopied(btn) {
+  btn.textContent = '✅ Скопировано!';
+  btn.classList.add('copied');
+  setTimeout(() => {
+    btn.textContent = '📋 Скопировать';
+    btn.classList.remove('copied');
+  }, 2000);
+}
+</script>
+
+
+</body></html>
