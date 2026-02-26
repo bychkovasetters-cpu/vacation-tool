@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0063)file:///Users/ekaterinabyckova/Downloads/vacation_digest_8.html -->
+<!-- saved from url=(0063)file:///Users/ekaterinabyckova/Downloads/vacation_digest_9.html -->
 <html lang="ru"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -321,17 +321,17 @@
   <div class="card">
     <div class="card-title">01 — Загрузи таблицу</div>
 
-    <div class="dropzone" id="dropzone" style="display: none;">
+    <div class="dropzone" id="dropzone">
       <input type="file" id="fileInput" accept=".csv">
       <div class="drop-icon">📂</div>
       <div class="drop-text"><strong>Выбери CSV файл</strong><br>или перетащи сюда</div>
     </div>
 
-    <div id="fileLoaded" style="display: flex;" class="file-loaded">
+    <div id="fileLoaded" style="display:none" class="file-loaded">
       <span class="file-icon">✅</span>
       <div>
-        <div class="file-name" id="fileName">Отпуск SETTERS - 2026 (1).csv</div>
-        <div class="file-rows" id="fileRows">72 сотрудников найдено</div>
+        <div class="file-name" id="fileName"></div>
+        <div class="file-rows" id="fileRows"></div>
       </div>
     </div>
   </div>
@@ -358,37 +358,24 @@
   </div>
 
   <!-- Generate -->
-  <button class="btn-generate" id="btnGenerate" onclick="generate()">
+  <button class="btn-generate" id="btnGenerate" onclick="generate()" disabled="">
     Сформировать дайджест →
   </button>
 
   <!-- Result -->
-  <div class="card result-card visible" id="resultCard" style="margin-top: 20px; display: block;">
+  <div class="card result-card" id="resultCard" style="margin-top:20px">
     <div class="result-header">
       <div>
         <div class="card-title" style="margin-bottom:4px">03 — Готовый текст</div>
-        <div class="result-meta" id="resultMeta">Найдено <strong>4</strong> сотрудников в отпуске</div>
+        <div class="result-meta" id="resultMeta"></div>
       </div>
       <div style="display:flex;gap:8px;">
         <button class="btn-copy" id="btnCopy" onclick="copyResult()">📋 Скопировать</button>
         <button class="btn-copy" id="btnSend" onclick="sendToTelegram()" style="border-color:#5af5c8;color:#5af5c8;white-space:nowrap;">✈️ В Telegram</button>
       </div>
     </div>
-    <div class="result-text" id="resultText" style="white-space:pre-wrap;line-height:1.8;font-size:14px;" contenteditable="false">Отпуска 02.03-08.03
-
-<span style="font-family:Unbounded,sans-serif;font-size:11px;letter-spacing:0.1em;color:#888">DESIGN HUB</span>
-**Сизова Анна**, __медиа-дизайнер__, 6 марта
-
-<span style="font-family:Unbounded,sans-serif;font-size:11px;letter-spacing:0.1em;color:#888">ACCOUNTING</span>
-**Аня Ивахненко**, __account director__, 2-6 марта
-
-<span style="font-family:Unbounded,sans-serif;font-size:11px;letter-spacing:0.1em;color:#888">OPERATIONS</span>
-**Вероника Долгих**, __операционный директор__, 2-7 марта
-
-<span style="font-family:Unbounded,sans-serif;font-size:11px;letter-spacing:0.1em;color:#888">CREATIVE</span>
-**Саша Малькова**, __creative lead__, 3-13 марта
-</div>
-    <div class="warnings" id="warnings"><div class="warning-item">⚠️ Не смогли распознать формат: «19-20 февраля» (19-20 февраля)</div><div class="warning-item">⚠️ Не смогли распознать формат: «16 февраля» (16 февраля)</div><div class="warning-item">⚠️ Не смогли распознать формат: «3-16 августа» (3-16 августа)</div><div class="warning-item">⚠️ Не смогли распознать формат: «17 февраля» (17 февраля)</div><div class="warning-item">⚠️ Не смогли распознать формат: «10-13 марта» (10-13 марта)</div><div class="warning-item">⚠️ Не смогли распознать формат: «2-6 марта» (2-6 марта)</div><div class="warning-item">⚠️ Не смогли распознать формат: «4 февраля» (4 февраля)</div><div class="warning-item">⚠️ Не смогли распознать формат: «20–24 апреля» (20–24 апреля)</div><div class="warning-item">⚠️ Не смогли распознать формат: «8–11 июня» (8–11 июня)</div><div class="warning-item">⚠️ Не смогли распознать формат: «27-30 апреля» (27-30 апреля)</div><div class="warning-item">⚠️ Не смогли распознать формат: «8-11 июня» (8-11 июня)</div><div class="warning-item">⚠️ Не смогли распознать формат: «7-18 сентября» (7-18 сентября)</div><div class="warning-item">⚠️ Не смогли распознать формат: «23-27 ноября» (23-27 ноября)</div><div class="warning-item">⚠️ Не смогли распознать формат: «20 февраля» (20 февраля)</div><div class="warning-item">⚠️ Не смогли распознать формат: «15-26 июня» (15-26 июня)</div><div class="warning-item">⚠️ Не смогли распознать формат: «5-16 октября» (5-16 октября)</div><div class="warning-item">⚠️ Не смогли распознать формат: «20–26 апреля» (20–26 апреля)</div><div class="warning-item">⚠️ Не смогли распознать формат: «19–30 октября» (19–30 октября)</div><div class="warning-item">⚠️ Не смогли распознать формат: «27-30 января» (27-30 января)</div><div class="warning-item">⚠️ Не смогли распознать формат: «20-30 апреля» (20-30 апреля)</div><div class="warning-item">⚠️ Не смогли распознать формат: «4-15 февраля» (4-15 февраля)</div></div>
+    <div class="result-text" id="resultText" style="white-space:pre-wrap;line-height:1.8;font-size:14px;" contenteditable="false"></div>
+    <div class="warnings" id="warnings"></div>
   </div>
 
   <!-- Telegram Settings Modal -->
